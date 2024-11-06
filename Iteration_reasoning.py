@@ -2,6 +2,7 @@ import argparse
 import glob
 import os.path
 import traceback
+import time
 from difflib import get_close_matches
 
 from tqdm import tqdm
@@ -1555,7 +1556,7 @@ def clean_rules(summarized_file_path, all_rels, relation_regex, fout_error, fout
 def parse_arguments():
     parser = argparse.ArgumentParser(description="KGC rule generation parameters")
     parser.add_argument("--data_path", type=str, default="datasets", help="Data directory")
-    parser.add_argument("--dataset", type=str, default="family", help="Dataset name")
+    parser.add_argument("--dataset", "-d", type=str, default="family", help="Dataset name")
     parser.add_argument("--sampled_paths", type=str, default="sampled_path", help="Sampled path directory")
     parser.add_argument("--prompt_paths", type=str, default="prompt", help="Sampled path directory")
     parser.add_argument("--rule_path", type=str, default="gen_rules_iteration", help="Path to rule file")

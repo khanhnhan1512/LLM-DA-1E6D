@@ -1,0 +1,37 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "RuleSampler",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "rule_sampler.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-d", "icews14",
+                "-m", "3",
+                "-n", "200",
+                "-p", "16",
+                "-s", "12",
+                "--is_relax_time", "No"
+            ]
+        },
+        {
+            "name": "IterationReasoning",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "Iteration_reasoning.py",
+            "console": "integratedTerminal",
+            "args": [
+                "-d", "icews14",
+                "--model_name", "gpt-3.5-turbo-0125",
+                "-f", "50",
+                "-l", "5",
+                "--is_rel_name", "Yes"
+            ]
+        }
+    ]
+}
