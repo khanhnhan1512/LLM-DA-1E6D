@@ -1,21 +1,38 @@
-import openai
-import json
+from openai import OpenAI
 import os
 
-client = openai.OpenAI(
-    # This is the default and can be omitted
-    api_key=os.environ.get("OPENAI_API_KEY"),
-)
+YOUR_API_KEY = os.environ.get("OPENAI_API_KEY")
 
-chat_completion = client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": "Say this is a test",
-        }
-    ],
-    model="gpt-3.5-turbo",
-)
+messages = [
+    {
+        "role": "system",
+        "content": (
+            "You are an artificial intelligence assistant and you need to "
+            "engage in a helpful, detailed, polite conversation with a user."
+        ),
+    },
+    {
+        "role": "user",
+        "content": (
+            "How many stars are in the universe?"
+        ),
+    },
+]
 
-response_json = json.loads(str(chat_completion))
-print(response_json)
+client = OpenAI(api_key=YOUR_API_KEY, base_url="https://api.perplexity.ai")
+
+# chat completion without streaming
+response = client.chat.completions.create(
+    model="llama-3.1-sonar-large-128k-online",
+    messages=messages,
+)
+print(response)
+
+# chat completion with streaming
+response_stream = client.chat.completions.create(
+    model="llama-3.1-sonar-large-128k-online",
+    messages=messages,
+    stream=True,
+)
+for response in response_stream:
+    print(response)

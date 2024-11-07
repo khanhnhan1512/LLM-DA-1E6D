@@ -27,7 +27,7 @@
             "console": "integratedTerminal",
             "args": [
                 "-d", "icews14",
-                "--model_name", "gpt-3.5-turbo-0125",
+                "--model_name", "llama",
                 "-f", "50",
                 "-l", "5",
                 "--is_rel_name", "Yes"
