@@ -1,5 +1,6 @@
 import argparse
 import os
+from dotenv import load_dotenv
 
 import torch
 import numpy as np
@@ -14,12 +15,14 @@ from datetime import datetime
 os.environ['CURL_CA_BUNDLE'] = ''
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
+from langchain.embeddings.openai import OpenAIEmbeddings
 from sklearn.metrics.pairwise import cosine_similarity
 from params import str_to_bool
 
 from utils import load_json_data, save_json_data
 
+load_dotenv()
 
 def select_similary_relations(relation2id, output_dir):
     id2relation = dict([(v, k) for k, v in relation2id.items()])
@@ -29,15 +32,15 @@ def select_similary_relations(relation2id, output_dir):
 
     all_rels = list(relation2id.keys())
     # 加载预训练的模型
-    model = SentenceTransformer('bert-base-nli-mean-tokens')
+    model = OpenAIEmbeddings(model="text-embedding-3-large", api_key=os.environ['OPENAI_API_KEY'])
 
     # 定义句子
     sentences_A = all_rels
     sentences_B = all_rels
 
     # 使用模型为句子编码
-    embeddings_A = model.encode(sentences_A)
-    embeddings_B = model.encode(sentences_B)
+    embeddings_A = model.embed_documents(sentences_A)
+    embeddings_B = model.embed_documents(sentences_B)
 
     # 计算句子之间的余弦相似度
     similarity_matrix = cosine_similarity(embeddings_A, embeddings_B)
