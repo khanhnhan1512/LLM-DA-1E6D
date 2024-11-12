@@ -11,6 +11,8 @@ to predict future events.
 
 ## Requirements
 ```
+conda create --name {your env name} --file requirements.yaml
+conda activate {your env name}
 pip install -r requirements.txt
 ```
 Set your OpenAI API key in `.env` file
